@@ -1,0 +1,18 @@
+$primary: #2c3e50;
+@import './vars.scss';
+// @import '~react-image-gallery/styles/scss/image-gallery.scss';
+@import '~bootswatch/dist/flatly/bootstrap.min.css';
+// @import './bootstrap/overrided.scss';
+@import '~normalize.css/normalize.css';
+// @import './navbar.scss';
+// @import './camera.scss';
+// @import './_loading.scss';
+// @import './scrollbar.scss';
+@import './primereact/index.scss';
+
+.vh-100 {
+  height: 100vh;
+}
+.container-grid {
+  display: grid;
+}
