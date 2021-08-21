@@ -3,7 +3,7 @@ import moment from 'moment';
 import 'moment/locale/es';
 import type { AppProps } from 'next/app';
 import { addLocale, locale } from 'primereact/api';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { defaults } from 'react-sweet-state';
 import { ToastProvider } from 'react-toast-notifications';
@@ -71,10 +71,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     setLocale();
   }, []);
 
-  const queryClient = useMemo(() => new QueryClient(), []);
   return (
     <SafeHydrate>
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={new QueryClient()}>
         {/* <ApolloProvider client={client}> */}
         {/* <Provider store={store}> */}
         <ToastProvider

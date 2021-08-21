@@ -27,7 +27,6 @@
     "graphql-tools": "^8.1.0",
     "loader": "^2.1.1",
     "moment": "^2.29.1",
-    "mr-commons": "^0.0.4",
     "next": "^11.1.0",
     "node-rsa": "^1.1.1",
     "node-sass": "^5.0.0",
@@ -58,6 +57,7 @@
   },
   "devDependencies": {
     "@types/faker": "^5.5.8",
+    "@types/react-query": "^1.2.9",
     "@types/graphql": "^14.5.0",
     "@types/lodash": "^4.14.172",
     "@types/node": "^16.7.1",
