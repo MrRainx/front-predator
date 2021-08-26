@@ -1,0 +1,6 @@
+query getProyectoByUsuarioAndCodigo($codigo: String!) {
+  proyecto: proyectoInvitado(codigo: $codigo) {
+    id
+    titulo
+  }
+}

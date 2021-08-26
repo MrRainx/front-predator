@@ -9,7 +9,7 @@ const useAxios = () => {
     const instance = Axios.create({
       baseURL: `${URL_BASE}api/v1/`,
       headers: {
-        Authorization: `JWT ${getItem(global.TOKEN)?.access}`,
+        Authorization: `JWT ${getItem(global.TOKEN)}`,
       },
     });
     instance.interceptors.request.use(

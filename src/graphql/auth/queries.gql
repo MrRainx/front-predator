@@ -1,0 +1,23 @@
+query me {
+  myInfo: me {
+    id
+    username
+    email
+    firstName
+    lastName
+    invitaciones: invitacionproyectoSet {
+      id
+      estado
+      estadoStr
+      proyecto {
+        id
+        titulo
+        codigo
+        categoria {
+          id
+          nombre
+        }
+      }
+    }
+  }
+}

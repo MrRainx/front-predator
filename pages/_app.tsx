@@ -1,3 +1,4 @@
+import { ApolloProvider } from '@apollo/client';
 import '@styles/index.scss';
 import moment from 'moment';
 import 'moment/locale/es';
@@ -7,6 +8,7 @@ import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { defaults } from 'react-sweet-state';
 import { ToastProvider } from 'react-toast-notifications';
+import client from 'src/services/client';
 
 const setLocale = () => {
   addLocale('es', {
@@ -74,17 +76,17 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SafeHydrate>
       <QueryClientProvider client={new QueryClient()}>
-        {/* <ApolloProvider client={client}> */}
-        {/* <Provider store={store}> */}
-        <ToastProvider
-          autoDismiss
-          autoDismissTimeout={15000}
-          placement="top-right"
-        >
-          <Component {...pageProps} />
-        </ToastProvider>
-        {/* </Provider> */}
-        {/* </ApolloProvider> */}
+        <ApolloProvider client={client}>
+          {/* <Provider store={store}> */}
+          <ToastProvider
+            autoDismiss
+            autoDismissTimeout={15000}
+            placement="top-right"
+          >
+            <Component {...pageProps} />
+          </ToastProvider>
+          {/* </Provider> */}
+        </ApolloProvider>
       </QueryClientProvider>
     </SafeHydrate>
   );
