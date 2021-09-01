@@ -9,6 +9,15 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { defaults } from 'react-sweet-state';
 import { ToastProvider } from 'react-toast-notifications';
 import client from 'src/services/client';
+import NProgress from 'nprogress';
+import Router from 'next/router';
+import 'nprogress/nprogress.css';
+import global from '@constants/global';
+
+NProgress.configure({ showSpinner: false });
+Router.events.on('routeChangeStart', () => NProgress.start());
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
 
 const setLocale = () => {
   addLocale('es', {
@@ -77,7 +86,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     <SafeHydrate>
       <QueryClientProvider client={new QueryClient()}>
         <ApolloProvider client={client}>
-          {/* <Provider store={store}> */}
           <ToastProvider
             autoDismiss
             autoDismissTimeout={15000}
@@ -85,7 +93,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           >
             <Component {...pageProps} />
           </ToastProvider>
-          {/* </Provider> */}
         </ApolloProvider>
       </QueryClientProvider>
     </SafeHydrate>

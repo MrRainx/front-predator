@@ -1,4 +1,6 @@
+import global from '@constants/global';
 import { EstadoInvitacion } from '@graphql/auth/enums';
+import { removeItem } from '@utils/storage';
 import {
   createHook,
   createStore,
@@ -53,6 +55,13 @@ const UsuarioStore = createStore({
             estadoInvitacionPredicate(EstadoInvitacion.ACEPTADA),
           ),
         });
+      };
+    },
+    logout: () => {
+      return ({ setState }) => {
+        setState(initialState);
+        removeItem(global.TOKEN);
+        removeItem(global.REFRESH_TOKEN);
       };
     },
   },

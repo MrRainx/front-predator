@@ -1,3 +1,4 @@
+import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import { PrimeIcons } from 'primereact/api';
 import { Menubar } from 'primereact/menubar';
@@ -10,6 +11,15 @@ import { useUsuario } from 'src/state/usuario.store';
 const Component = (props, ref) => {
   const { id, username, email } = useUsuario();
   const op = useRef(null);
+  const router = useRouter();
+
+  const command = (path) => () => {
+    router.push(path);
+  };
+
+  const handleLogout = () => {
+    router.push('/logout');
+  };
 
   const end = useMemo(() => {
     if (typeof window?.document === 'undefined') {
@@ -76,10 +86,10 @@ const Component = (props, ref) => {
             </button>
             <button onClick={commandPush('/perfil/actividad')}>
               <i className="pi pi-user" /> Mi Actividad
-            </button>
-            <button onClick={logOut}>
+            </button>*/}
+            <button onClick={handleLogout}>
               <i className={PrimeIcons.POWER_OFF} /> Salir
-            </button> */}
+            </button>
           </ListGroup>
         </OverlayPanel>
       </React.Fragment>
@@ -92,7 +102,29 @@ const Component = (props, ref) => {
         className="shadow disable-left-button"
         model={[
           {
-            label: 'Prueba',
+            label: 'Dashboard',
+            command: command('/'),
+          },
+          {
+            label: 'Proyectos',
+            items: [
+              {
+                label: 'Mis proyectos',
+                icon: PrimeIcons.LIST,
+              },
+              {
+                label: 'Crear nuevo proyecto',
+                icon: PrimeIcons.PLUS,
+                command: command('/proyectos/add'),
+              },
+              {
+                separator: true,
+              },
+              {
+                label: 'Proyectos en los que participo',
+                icon: PrimeIcons.LIST,
+              },
+            ],
           },
         ]}
         end={(e) => end}

@@ -1,7 +1,7 @@
 import { isArray } from 'lodash';
 import React from 'react';
 import BreadCrumbItem, {
-  BreadCrumbItemProps
+  BreadCrumbItemProps,
 } from './components/BreadCrumbItem';
 
 export interface BreadCrumbProps {
@@ -17,7 +17,7 @@ export const initialProps: BreadCrumbProps = {
 };
 
 const getItem = (item: any, position: 0 | 1, attribute: 'title' | 'href') => {
-  if (typeof item === 'string') {
+  if (typeof item === 'string' && position !== 1) {
     return item;
   } else if (isArray(item)) {
     return item[position];

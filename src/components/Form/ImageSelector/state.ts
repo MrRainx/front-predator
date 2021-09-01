@@ -1,6 +1,6 @@
 import { uniqueId } from 'lodash';
 import { createHook, createStore, defaults } from 'react-sweet-state';
-import { setState } from 'utils/state';
+import { setState } from '@utils/state';
 
 defaults.devtools = true;
 
@@ -20,7 +20,7 @@ export const ImageSelectorStore = createStore({
   name: 'ImageSelector',
   initialState,
   actions: {
-    setState: setState<ImageSelectorStoreProps>(),
+    setState: setState,
     toggleDialog: (isVisible: boolean = false) => {
       return ({ setState: setter }) => {
         setter({

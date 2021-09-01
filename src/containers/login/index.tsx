@@ -28,8 +28,7 @@ const LoginContainer = () => {
       const { data, status } = await mutation.mutateAsync(formData);
 
       if (status === HttpResponses.HTTP_200_OK) {
-        setItem(global.TOKEN, data?.access);
-        setItem(global.REFRESH_TOKEN, data?.refresh);
+        global.setTokens(data?.access, data?.refresh);
         router.replace('/');
       }
     } catch (error) {

@@ -6,19 +6,21 @@ export interface BaseButtonProps extends ButtonProps {
   outlined?: boolean;
   block?: boolean;
   sm?: boolean;
+  lg?: boolean;
 }
 
 const BaseButton: React.FC<BaseButtonProps> = (props) => {
-  const { variant, outlined, block, sm, ...rest } = props;
+  const { variant, outlined, block, sm, lg, className, ...rest } = props;
 
   return (
     <React.Fragment>
       {/*@ts-ignore*/}
       <Button
-        className={classNames(rest.className, {
+        className={classNames(className, {
           [`p-button-${variant}`]: !!variant,
           'p-button-outlined': outlined,
           'p-button-sm': sm,
+          'p-button-lg': lg,
           'w-100': block,
         })}
         {...rest}

@@ -1,16 +1,19 @@
 import { useQuery } from '@apollo/client';
+import HeadBreadCrumb, {
+  HeadBreadCrumbProps,
+} from '@components/BreadCrumbs/HeadBreadCrumb';
 import HtmlHead from '@components/HtmlHead';
 import Loading from '@components/Loading';
 import { me } from '@graphql/auth/queries.gql';
 import { BaseLayoutProps } from '@layouts/typedefs';
 import { useRouter } from 'next/dist/client/router';
 import { ScrollTop } from 'primereact/scrolltop';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useUsuario } from 'src/state/usuario.store';
 import PrivateNabvar from './components/PrivateNavbar';
 
 export interface PrivateLayoutProps extends BaseLayoutProps {
-  breadCrumb?: {};
+  breadCrumb?: HeadBreadCrumbProps;
   hideNavbar?: boolean;
   privateNavbar?: boolean;
   publicNavbar?: boolean;
@@ -37,6 +40,11 @@ const PrivateLayout: React.FC<PrivateLayoutProps> = (props = initialState) => {
       setUsuario(myInfo);
     },
   });
+  useEffect(() => {
+    try {
+      global.isTokenExp();
+    } catch (error) {}
+  }, []);
 
   return (
     <React.Fragment>
@@ -56,6 +64,7 @@ const PrivateLayout: React.FC<PrivateLayoutProps> = (props = initialState) => {
               }}
               ref={containerRef}
             >
+              {props?.breadCrumb && <HeadBreadCrumb {...props.breadCrumb} />}
               {props?.children}
               <ScrollTop
                 target="parent"

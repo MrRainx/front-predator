@@ -16,8 +16,8 @@ const Home: NextPage = () => {
         <h1 className="display-6 text-center my-5">
           Bienvenido &lsquo;{username}&rsquo;
         </h1>
-        <div className="grid justify-content-center mt-5">
-          <div className="md:col-6 xl:col-4 text-center">
+        <div className="grid justify-content-around mt-5">
+          <div className="col-12 md:col-6 xl:col-4 m-2 border text-center">
             <h4 className="my-4">Proyecto en los que participas</h4>
             <ListBox
               filter
@@ -27,18 +27,18 @@ const Home: NextPage = () => {
               optionLabel="proyecto.titulo"
               filterPlaceholder="Buscar..."
               onChange={({ value }) => {
-                router.push(`/proyecto/${value?.proyecto?.codigo}`);
+                router.push(`/proyectos/${value?.proyecto?.codigo}`);
               }}
               itemTemplate={(value) => {
                 return (
-                  <Link href={`/proyecto/${value?.proyecto?.codigo}`}>
+                  <Link href={`/proyectos/${value?.proyecto?.codigo}`}>
                     {value.proyecto?.titulo}
                   </Link>
                 );
               }}
             />
           </div>
-          <div className="md:col-6 xl:col-4 text-center">
+          <div className="col-12 md:col-6 xl:col-4 m-2 border text-center">
             <h4 className="my-4">Mis proyectos</h4>
             <ListBox
               filter
@@ -47,12 +47,12 @@ const Home: NextPage = () => {
               optionLabel="proyecto.titulo"
               filterPlaceholder="Buscar..."
               onChange={({ value }) => {
-                router.push(`/proyecto/${value?.proyecto?.codigo}`);
+                router.push(`/proyectos/${value?.proyecto?.codigo}`);
               }}
               className="p-inputtext-sm"
               itemTemplate={(value) => {
                 return (
-                  <Link href={`/proyecto/${value?.proyecto?.codigo}`}>
+                  <Link href={`/proyectos/${value?.proyecto?.codigo}`}>
                     {value.proyecto?.titulo}
                   </Link>
                 );

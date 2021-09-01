@@ -1,8 +1,20 @@
 import global from '@constants/global';
-import { getItem } from '@utils/storage';
+import { getItem, setItem } from '@utils/storage';
 import Axios, { AxiosInstance } from 'axios';
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import { useMemo } from 'react';
-import { URL_BASE } from 'src/services/urls';
+import { refreshTokenUrl, URL_BASE } from 'src/services/urls';
+
+// Function that will be called to refresh authorization
+const refreshAuthLogic = (failedRequest) =>
+  Axios.post(`${URL_BASE}api/v1/${refreshTokenUrl}`, {
+    refresh: global.getRefrehsToken(),
+  }).then(({ data }) => {
+    setItem(global.TOKEN, data.access);
+    failedRequest.response.config.headers['Authorization'] =
+      'JWT ' + data.access;
+    return Promise.resolve();
+  });
 
 const useAxios = () => {
   const privateApi: AxiosInstance = useMemo(() => {
@@ -12,6 +24,7 @@ const useAxios = () => {
         Authorization: `JWT ${getItem(global.TOKEN)}`,
       },
     });
+    createAuthRefreshInterceptor(instance, refreshAuthLogic);
     instance.interceptors.request.use(
       (config) => {
         // if (
