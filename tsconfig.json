@@ -12,7 +12,8 @@
       "@HOC/*": ["HOC/*"],
       "@styles/*": ["styles/*"],
       "@graphql/*": ["src/graphql/*"],
-      "@constants/*": ["src/constants/*"]
+      "@constants/*": ["src/constants/*"],
+      "@routes/*": ["src/routes/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

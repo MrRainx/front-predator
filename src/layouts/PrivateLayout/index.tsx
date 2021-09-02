@@ -5,6 +5,7 @@ import HeadBreadCrumb, {
 import HtmlHead from '@components/HtmlHead';
 import Loading from '@components/Loading';
 import { me } from '@graphql/auth/queries.gql';
+import { useLayout } from '@layouts/layout.store';
 import { BaseLayoutProps } from '@layouts/typedefs';
 import { useRouter } from 'next/dist/client/router';
 import { ScrollTop } from 'primereact/scrolltop';
@@ -31,6 +32,7 @@ const PrivateLayout: React.FC<PrivateLayoutProps> = (props = initialState) => {
   const router = useRouter();
 
   const { setUsuario } = useUsuario();
+  const layout = useLayout();
 
   const { loading } = useQuery(me, {
     onCompleted: ({ myInfo }) => {
@@ -48,7 +50,7 @@ const PrivateLayout: React.FC<PrivateLayoutProps> = (props = initialState) => {
 
   return (
     <React.Fragment>
-      <HtmlHead {...props?.head} />
+      <HtmlHead {...props?.head} {...layout.head} />
       <main className="d-flex flex-row vh-100 w-100">
         <div className="d-flex flex-column w-100">
           {!props.hideNavbar && <PrivateNabvar ref={ref} />}
@@ -64,7 +66,9 @@ const PrivateLayout: React.FC<PrivateLayoutProps> = (props = initialState) => {
               }}
               ref={containerRef}
             >
-              {props?.breadCrumb && <HeadBreadCrumb {...props.breadCrumb} />}
+              {(props?.breadCrumb || layout?.breadCrumb) && (
+                <HeadBreadCrumb {...props.breadCrumb} {...layout.breadCrumb} />
+              )}
               {props?.children}
               <ScrollTop
                 target="parent"

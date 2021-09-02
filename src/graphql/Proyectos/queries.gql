@@ -5,3 +5,15 @@ query getProyectoByUsuarioAndCodigo($codigo: String!) {
     descripcion
   }
 }
+
+query getProyectoById($pk: ID!) {
+  proyecto: proyectoUsuario(pk: $pk) {
+    id
+    titulo
+    codigo
+    categoria {
+      id
+      nombre
+    }
+  }
+}

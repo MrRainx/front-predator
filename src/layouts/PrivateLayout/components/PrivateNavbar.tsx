@@ -1,3 +1,4 @@
+import ProyectoRouter from '@routes/proyectos.routes';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import { PrimeIcons } from 'primereact/api';
@@ -115,7 +116,7 @@ const Component = (props, ref) => {
               {
                 label: 'Crear nuevo proyecto',
                 icon: PrimeIcons.PLUS,
-                command: command('/proyectos/add'),
+                command: command(ProyectoRouter.add),
               },
               {
                 separator: true,

@@ -3,7 +3,6 @@ import global from '@constants/global';
 import useAxios from '@hooks/useAxios';
 import useCustomForm from '@hooks/useCustomForm';
 import useToasts from '@hooks/useToasts';
-import { setItem } from '@utils/storage';
 import { useRouter } from 'next/dist/client/router';
 import { Button } from 'primereact/button';
 import React from 'react';
@@ -25,6 +24,7 @@ const LoginContainer = () => {
 
   const onSubmit = async (formData) => {
     try {
+      console.log(formData);
       const { data, status } = await mutation.mutateAsync(formData);
 
       if (status === HttpResponses.HTTP_200_OK) {
