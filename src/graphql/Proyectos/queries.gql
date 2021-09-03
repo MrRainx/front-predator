@@ -1,3 +1,5 @@
+#import "./fragments.gql"
+
 query getProyectoByUsuarioAndCodigo($codigo: String!) {
   proyecto: proyectoInvitado(codigo: $codigo) {
     id
@@ -14,6 +16,23 @@ query getProyectoById($pk: ID!) {
     categoria {
       id
       nombre
+    }
+  }
+}
+
+query getProyectoAndEstadosById($pk: ID!) {
+  proyecto: proyectoUsuario(pk: $pk) {
+    id
+    titulo
+    codigo
+    estados {
+      ...EstadosLeadProyectoFragment
+      estados: estadoleadSet {
+        ...EstadosLeadProyectoFragment
+        estadoPadre {
+          id
+        }
+      }
     }
   }
 }

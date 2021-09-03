@@ -20,7 +20,7 @@ const UpdateProyectoContainer = ({ id }) => {
     mode: 'onChange',
   });
 
-  const { setHead, setBreadCrumb } = useLayoutActions();
+  const { setLayout, resetLayoutState } = useLayoutActions();
 
   const { loading, data } = useQuery(getProyectoById, {
     variables: {
@@ -40,23 +40,26 @@ const UpdateProyectoContainer = ({ id }) => {
   );
 
   useEffect(() => {
-    setHead({
-      title: data?.proyecto?.titulo,
-    });
-    setBreadCrumb({
-      title: 'Editar Proyecto',
-      items: [[data?.proyecto?.titulo]],
+    setLayout({
+      head: {
+        title: data?.proyecto?.titulo,
+      },
+      breadCrumb: {
+        title: 'Editar Proyecto',
+
+        items: [[data?.proyecto?.titulo]],
+      },
     });
   }, [loading]);
 
   const onSubmit = async (formData) => {
     try {
       const { data, status } = await mutation.mutateAsync(formData);
-      console.log(status);
       if (status === HttpResponses.HTTP_200_OK) {
         console.log(data);
         const route = ProyectoRouter.configEstados(data?.id);
         router.push(route);
+        return resetLayoutState();
       }
     } catch (error) {
       methods.setErrorsApi(error);

@@ -1,0 +1,8 @@
+fragment EstadosLeadProyectoFragment on EstadoLeadType {
+  id
+  titulo
+  descripcion
+  color
+  colorFondo
+  orden
+}

@@ -31,6 +31,12 @@ const actions = {
   setLayout(state: LayoutProps) {
     return ({ setState }) => setState(state);
   },
+  resetState() {
+    return ({ setState }) => setState(initialState);
+  },
+  resetLayoutState() {
+    return ({ setState }) => setState(initialState);
+  },
 };
 
 type Action = typeof actions;
