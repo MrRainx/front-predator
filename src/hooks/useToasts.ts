@@ -1,3 +1,5 @@
+import axios from 'axios';
+import _ from 'lodash';
 import { ReactNode } from 'react';
 import {
   AddToast,
@@ -31,6 +33,7 @@ export interface UseToastsProps {
     appearance: AppearanceTypes;
   }>;
   updateToast: UpdateToast;
+  addApiErrorToast: Function;
 }
 
 export interface BaseToastProps {
@@ -47,7 +50,6 @@ const useToasts = (): UseToastsProps => {
     { content, extraProps, callback }: BaseToastProps,
     appearance: AppearanceTypes,
   ): void => {
-    console.log(content);
     addToast(content, { ...extraProps, appearance }, callback);
   };
 
@@ -67,9 +69,25 @@ const useToasts = (): UseToastsProps => {
     return Object.fromEntries(entries);
   };
 
+  const addApiErrorToast = (
+    error,
+    level: AppearanceTypes = 'warning',
+    path = 'nonFieldErrors',
+  ) => {
+    if (axios.isAxiosError(error)) {
+      baseToast(
+        {
+          content: _.get(error.response.data, path, ''),
+        },
+        level,
+      );
+    }
+  };
+
   return {
     ...buildToast(),
     ...rest,
+    addApiErrorToast,
   };
 };
 

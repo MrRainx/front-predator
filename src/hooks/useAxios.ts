@@ -2,7 +2,7 @@ import global from '@constants/global';
 import { getItem, setItem } from '@utils/storage';
 import Axios, { AxiosInstance } from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
-import { useMemo } from 'react';
+import { useEffect } from 'react';
 import { refreshTokenUrl, URL_BASE } from 'src/services/urls';
 
 // Function that will be called to refresh authorization
@@ -17,44 +17,42 @@ const refreshAuthLogic = (failedRequest) =>
   });
 
 const useAxios = () => {
-  const privateApi: AxiosInstance = useMemo(() => {
-    const instance = Axios.create({
-      baseURL: `${URL_BASE}api/v1/`,
-      headers: {
-        Authorization: `JWT ${getItem(global.TOKEN)}`,
-      },
-    });
-    createAuthRefreshInterceptor(instance, refreshAuthLogic);
-    instance.interceptors.request.use(
-      (config) => {
-        // if (
-        //   (config.data instanceof Object || validator.isJSON(config?.data)) &&
-        //   global.ENCRYPT
-        // ) {
-        //   config.data = objectToB64(config.data);
-        // }
-        return config;
-      },
-      (error) => {
-        return Promise.reject(error);
-      },
-    );
-    instance.interceptors.response.use(
-      (value) => {
-        // if (value?.data && valu) {
-        //   value.data = b64ToObject(value.data);
-        // }
-        return value;
-      },
-      (error) => Promise.reject(error),
-    );
-    return instance;
-  }, []);
+  const privateApi: AxiosInstance = Axios.create({
+    baseURL: `${URL_BASE}api/v1/`,
+    headers: {
+      Authorization: `JWT ${getItem(global.TOKEN)}`,
+    },
+  });
 
-  const publicApi: AxiosInstance = useMemo(() => {
-    return Axios.create({
-      baseURL: `${URL_BASE}api/v1/`,
-    });
+  const publicApi: AxiosInstance = Axios.create({
+    baseURL: `${URL_BASE}api/v1/`,
+  });
+
+  useEffect(() => {
+    createAuthRefreshInterceptor(privateApi, refreshAuthLogic);
+    // privateApi.interceptors.request.use(
+    //   (config) => {
+    //     // if (
+    //     //   (config.data instanceof Object || validator.isJSON(config?.data)) &&
+    //     //   global.ENCRYPT
+    //     // ) {
+    //     //   config.data = objectToB64(config.data);
+    //     // }
+    //     return config;
+    //   },
+    //   (error) => {
+    //     return Promise.reject(error);
+    //   },
+    // );
+    // privateApi.interceptors.response.use(
+    //   (value) => {
+    //     // if (value?.data && valu) {
+    //     //   value.data = b64ToObject(value.data);
+    //     // }
+    //     return value;
+    //   },
+    //   (error) => Promise.reject(error),
+    // );
   }, []);
 
   // const getReporte = async (uri: string, body: any = {}) => {

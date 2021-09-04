@@ -4,6 +4,7 @@ export const APPS = {
   USUARIOS: 'usuarios/',
   PROYECTOS: 'proyectos/',
   ESTADOS_LEADS: 'estados-leads/',
+  CONFIG_GRUPOS_LEADS: 'config-grupos-leads/',
 };
 
 export const getTokenUrl = `${APPS.USUARIOS}token/`;
@@ -20,4 +21,15 @@ export const deleteEstadoProyectoUrl = (id: string) => {
 };
 export const updateEstadoProyectoUrl = (id: string) => {
   return `${APPS.ESTADOS_LEADS}${id}/`;
+};
+
+/**
+ * CONFIGURACIONES DE GRUPOS DE LEAD
+ */
+export const createConfigGrupoLeadUrl = `${APPS.CONFIG_GRUPOS_LEADS}`;
+export const deleteConfigGrupoLeadUrl = (id: string | number) => {
+  return `${APPS.CONFIG_GRUPOS_LEADS}${id}/`;
+};
+export const updateConfigGrupoLeadUrl = (id: string | number) => {
+  return `${APPS.CONFIG_GRUPOS_LEADS}${id}/`;
 };

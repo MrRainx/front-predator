@@ -1,10 +1,10 @@
 import { isArray } from 'lodash';
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import BreadCrumbItem, {
   BreadCrumbItemProps,
 } from './components/BreadCrumbItem';
 
-export interface BreadCrumbProps {
+export interface BreadCrumbProps extends PropsWithChildren<any> {
   basePath?: string;
   baseTitle?: string;
   items?: (BreadCrumbItemProps | string[] | string)[];
@@ -36,12 +36,9 @@ const mappItem = (item: any): BreadCrumbItemProps => {
 
 const BreadCrumb: React.FC<BreadCrumbProps> = (props) => {
   return (
-    <nav aria-label="breadcrumb" className="text-center text-md-right">
-      <ol>
-        <BreadCrumbItem
-          title={String(props.baseTitle || initialProps.baseTitle)}
-          href={props.basePath || initialProps.basePath}
-        />
+    <nav aria-label="breadcrumb" className="text-left md:text-right">
+      <ol className="breadcrumb">
+        <BreadCrumbItem title={String(props.baseTitle)} href={props.basePath} />
         {props.items?.map?.((item, index) => (
           <BreadCrumbItem key={index} {...mappItem(item)} />
         ))}
@@ -49,5 +46,6 @@ const BreadCrumb: React.FC<BreadCrumbProps> = (props) => {
     </nav>
   );
 };
+BreadCrumb.defaultProps = initialProps;
 
 export default BreadCrumb;

@@ -36,3 +36,18 @@ query getProyectoAndEstadosById($pk: ID!) {
     }
   }
 }
+
+query getProyectoAndLeadGroupConfigs($pk: ID!) {
+  proyecto: proyectoUsuario(pk: $pk) {
+    id
+    titulo
+    codigo
+    grupos: configuraciongrupoleadSet {
+      id
+      codigo
+      titulo
+      descripcion
+      orden
+    }
+  }
+}

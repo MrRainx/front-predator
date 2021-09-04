@@ -13,6 +13,7 @@ import { Accordion, AccordionTab } from 'primereact/accordion';
 import { PrimeIcons } from 'primereact/api';
 import { Dialog } from 'primereact/dialog';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { Toolbar } from 'primereact/toolbar';
 import React, { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useWatch } from 'react-hook-form';
 import { useMutation } from 'react-query';
@@ -43,7 +44,7 @@ const ConfigEstadoContainer = ({ id }) => {
     control: methods.control,
   });
 
-  const { setLayout } = useLayoutActions();
+  const { setLayout, resetLayoutState } = useLayoutActions();
 
   const { privateApi } = useAxios();
 
@@ -168,97 +169,117 @@ const ConfigEstadoContainer = ({ id }) => {
     setShowModal(true);
   };
 
+  const onClickAdd = () => {
+    methods.reset({});
+    setShowModal(true);
+  };
+
   return (
     <React.Fragment>
       <div className="d-flex flex-wrap justify-content-between mb-3">
         <BaseButton
+          outlined
           label="Agregar nuevo estado"
-          className="rounded-0"
           icon={PrimeIcons.PLUS}
-          onClick={() => setShowModal(true)}
+          onClick={onClickAdd}
+          loading={loading}
         />
         <BaseButton
+          outlined
           variant="info"
           label="Recargar estados"
-          className="rounded-0"
           icon={PrimeIcons.REFRESH}
           onClick={() => refetch()}
           loading={loading}
         />
       </div>
-
-      {!loading && (
-        <Accordion>
-          {estados.map((estado) => (
-            <AccordionTab
-              key={estado.id}
-              headerClassName="border"
-              headerTemplate={headerTemplate(estado)}
-            >
-              <div className="d-flex justify-content-between">
-                <div className="border-right border-end w-100">
-                  <h5>Descripción:</h5>
-                  <p>{estado.descripcion}</p>
-                </div>
-                <div className="align-self-center justify-content-center d-flex flex-wrap">
-                  <BaseButton
-                    variant="danger"
-                    icon={PrimeIcons.TRASH}
-                    sm
-                    onClick={onDeleteEstado(estado)}
-                  />
-                  <BaseButton
-                    variant="info"
-                    icon={PrimeIcons.PENCIL}
-                    sm
-                    onClick={onClickEdit(estado)}
-                  />
-                </div>
-              </div>
-              <h5>Sub estados:</h5>
-              <ul className="list-group w-100">
-                {estado.estados.map((subEstado) => (
-                  <li className="list-group-item py-0 px-0" key={subEstado.id}>
-                    <div className="d-flex w-100 justify-content-between">
-                      <div className="border-end w-100">
-                        {headerTemplate({
-                          ...subEstado,
-                          orden: `${estado.orden}.${subEstado.orden}`,
-                        })}
-
-                        <p className="pl-3 text-justify pr-3">
-                          {subEstado.descripcion}
-                        </p>
-                      </div>
-                      <div className="align-self-center mx-3 ml-md-3 d-flex flex-column">
-                        <BaseButton
-                          variant="danger"
-                          icon={PrimeIcons.TRASH}
-                          className="my-2"
-                          sm
-                          onClick={onDeleteEstado(subEstado)}
-                        />
-                        <BaseButton
-                          variant="info"
-                          sm
-                          icon={PrimeIcons.PENCIL}
-                          onClick={onClickEdit(subEstado)}
-                        />
-                      </div>
+      <div className="grid">
+        <div className="col-12">
+          {!loading && (
+            <Accordion>
+              {estados.map((estado) => (
+                <AccordionTab
+                  key={estado.id}
+                  headerClassName="border"
+                  headerTemplate={headerTemplate(estado)}
+                >
+                  <div className="d-flex justify-content-between">
+                    <div className="border-right border-end w-100">
+                      <h5>Descripción:</h5>
+                      <p>{estado.descripcion}</p>
                     </div>
-                  </li>
-                ))}
-              </ul>
-            </AccordionTab>
-          ))}
-        </Accordion>
-      )}
-      {loading && (
-        <div className="col-12 text-center my-7">
-          <ProgressSpinner />
-          <h5>Buscando estados...</h5>
+                    <div className="align-self-center justify-content-center d-flex flex-wrap">
+                      <BaseButton
+                        outlined
+                        rounded
+                        variant="danger"
+                        icon={PrimeIcons.TRASH}
+                        sm
+                        onClick={onDeleteEstado(estado)}
+                      />
+                      <BaseButton
+                        outlined
+                        rounded
+                        variant="info"
+                        icon={PrimeIcons.PENCIL}
+                        sm
+                        onClick={onClickEdit(estado)}
+                      />
+                    </div>
+                  </div>
+                  <h5>Sub estados:</h5>
+                  <ul className="list-group w-100">
+                    {estado.estados.map((subEstado) => (
+                      <li
+                        className="list-group-item py-0 px-0"
+                        key={subEstado.id}
+                      >
+                        <div className="d-flex w-100 justify-content-between">
+                          <div className="border-end w-100">
+                            {headerTemplate({
+                              ...subEstado,
+                              orden: `${estado.orden}.${subEstado.orden}`,
+                            })}
+
+                            <p className="pl-3 text-justify pr-3">
+                              {subEstado.descripcion}
+                            </p>
+                          </div>
+                          <div className="align-self-center mx-3 ml-md-3 d-flex flex-column">
+                            <BaseButton
+                              outlined
+                              rounded
+                              variant="danger"
+                              icon={PrimeIcons.TRASH}
+                              className="my-2"
+                              sm
+                              onClick={onDeleteEstado(subEstado)}
+                            />
+                            <BaseButton
+                              outlined
+                              rounded
+                              variant="info"
+                              sm
+                              icon={PrimeIcons.PENCIL}
+                              onClick={onClickEdit(subEstado)}
+                            />
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </AccordionTab>
+              ))}
+            </Accordion>
+          )}
+          {loading && (
+            <div className="text-center my-7">
+              <ProgressSpinner />
+              <h5>Buscando estados...</h5>
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       <FormProvider {...methods}>
         <Dialog
@@ -317,7 +338,7 @@ const ConfigEstadoContainer = ({ id }) => {
             </Form.FieldWrapper>
           </div>
 
-          <div className="d-flex justify-content-between">
+          <div className="d-flex flex-wrap justify-content-between">
             {/* Color */}
             <Form.FieldWrapper
               name="color"
@@ -364,9 +385,11 @@ const ConfigEstadoContainer = ({ id }) => {
             variant="danger"
             label="Regresar"
           />
-          <BaseButton
+          <HrefButton
             className="col-12 md:col-3 my-1"
             label="Configurar grupos de leads"
+            href={Router.configLeadGroups(id)}
+            onClick={resetLayoutState}
           />
         </div>
       </div>

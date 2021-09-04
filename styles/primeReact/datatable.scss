@@ -1,0 +1,68 @@
+.p-datatable-header {
+  background-color: #e7e7e7 !important;
+  border-top: 1px solid $--gray !important;
+  border-right: 1px solid $--gray !important;
+  border-left: 1px solid $--gray !important;
+}
+
+.p-datatable-thead > tr > th {
+  text-align: center !important;
+  background-color: #e7e7e7 !important;
+  border: 1px solid $--gray !important;
+
+  &.p-highlight {
+    border: 1px solid $--primary;
+    background-color: $--primary !important;
+    & > * {
+      color: white !important;
+    }
+  }
+  span.p-column-title {
+    font-size: 14px !important;
+  }
+  span.p-sortable-column-icon {
+    font-size: 13px !important;
+  }
+}
+
+.p-filter-column {
+  & > .p-column-filter {
+    width: 100%;
+    font-weight: bold !important;
+  }
+}
+
+.p-datatable-emptymessage {
+  & > * {
+    text-align: center !important;
+    font-size: 25px !important;
+  }
+}
+
+.p-datatable-wrapper {
+  border-left: 1px solid $--gray !important;
+  border-right: 1px solid $--gray !important;
+}
+
+.p-paginator {
+  background-color: #e7e7e7 !important;
+  border: 1px solid $--gray !important;
+  & > button {
+    color: $--primary !important;
+  }
+}
+
+.p-datatable-tbody {
+  td[role='cell'] {
+    font-size: 17px;
+    padding-top: 0.2rem !important;
+    padding-bottom: 0.2rem !important;
+  }
+  .index-column {
+    min-width: 60px;
+    max-width: 100px !important;
+    font-weight: bold;
+    text-align: center !important;
+    font-size: 12px !important;
+  }
+}

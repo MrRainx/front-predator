@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { ErrorMessage } from '@hookform/error-message';
 import classNames from 'classnames';
 import _ from 'lodash';
@@ -17,7 +18,6 @@ const NonFieldErrors: React.FC<NonFieldErrorsProps> = (props) => {
 
   useEffect(() => {
     const hasError = _.get(formState.errors, props.name, false);
-    console.log(hasError);
     setShowErrors(hasError);
   }, [formState.submitCount, formState.errors, formState.isSubmitSuccessful]);
 
