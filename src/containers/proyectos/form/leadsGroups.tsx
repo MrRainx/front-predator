@@ -19,6 +19,7 @@ import {
   deleteConfigGrupoLeadUrl,
   updateConfigGrupoLeadUrl,
 } from 'src/services/urls';
+import FooterButtons from './components/FooterButtons';
 
 export interface IGrupo {
   id?: string | number;
@@ -71,8 +72,8 @@ const LeadsGroupsContainer = ({ id }) => {
       breadCrumb: {
         items: [
           [data?.proyecto?.titulo || 'Proyecto', Router.update(id)],
-          ['Configuración de estados', Router.configEstados(id)],
-          ['Configuración de leads'],
+          ['Config. estados', Router.configEstados(id)],
+          ['Config. leads'],
         ],
       },
     });
@@ -173,7 +174,7 @@ const LeadsGroupsContainer = ({ id }) => {
       </div>
       <div className="grid">
         <div className="col-12">
-          <h1 className=" text-center my-3">Grupos de Leads</h1>
+          <h1 className=" text-center my-3">Grupos de campos</h1>
           <ul className="list-group">
             {!loading &&
               !deleteMutation.isLoading &&
@@ -183,12 +184,14 @@ const LeadsGroupsContainer = ({ id }) => {
                   key={grupo.codigo}
                 >
                   <div className="ms-2 me-auto">
-                    <div className="d-flex">
-                      <strong className="mr-1">{grupo.orden}.</strong>
-                      <h5 className="mr-1">{grupo.titulo}</h5>
+                    <div className="d-flex flex-wrap mb-2">
+                      <h5 className="mr-1">
+                        <strong className="mr-1">{grupo.orden}. </strong>
+                        {grupo.titulo}
+                      </h5>
                       <strong>({grupo.codigo})</strong>
                     </div>
-                    <p className="text-justify">{grupo.descripcion}</p>
+                    <p className="text-left">{grupo.descripcion}</p>
                   </div>
                   <span className="badge rounded-pill d-flex flex-column">
                     <HrefButton
@@ -213,7 +216,7 @@ const LeadsGroupsContainer = ({ id }) => {
 
           {(loading || deleteMutation.isLoading) && <LoadingSpinner />}
 
-          {grupos.length < 1 && (
+          {!loading && grupos.length < 1 && (
             <h3 className="text-center">No tienes ninguna configuración</h3>
           )}
         </div>
@@ -302,36 +305,25 @@ const LeadsGroupsContainer = ({ id }) => {
         </Dialog>
       </FormProvider>
 
-      <div className="col-12 card pt-4 pb-3 px-4 md:mt-4">
-        <div className="grid justify-content-around">
-          <HrefButton
-            outlined
-            className="col-12 md:col-3 my-1"
-            href={Router.configEstados(id)}
-            variant="danger"
-            label="Regresar"
-            loading={
-              loading ||
-              addMutation.isLoading ||
-              updateMutation.isLoading ||
-              deleteMutation.isLoading
-            }
-          />
-          <HrefButton
-            outlined
-            className="col-12 md:col-3 my-1"
-            label="Configuración de campos"
-            href={Router.configLeadGroups(id)}
-            disabled={grupos.length === 0}
-            loading={
-              loading ||
-              addMutation.isLoading ||
-              updateMutation.isLoading ||
-              deleteMutation.isLoading
-            }
-          />
-        </div>
-      </div>
+      <FooterButtons
+        backHref={Router.configEstados(id)}
+        backLabel="Regresar"
+        backIsLoading={
+          loading ||
+          addMutation.isLoading ||
+          updateMutation.isLoading ||
+          deleteMutation.isLoading
+        }
+        nextHref={Router.configLeadCampos(id)}
+        nextIsLoading={
+          loading ||
+          addMutation.isLoading ||
+          updateMutation.isLoading ||
+          deleteMutation.isLoading
+        }
+        nextLabel="Configuración de campos"
+        nextIsDisabled={grupos.length === 0}
+      />
     </React.Fragment>
   );
 };

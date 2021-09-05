@@ -51,3 +51,28 @@ query getProyectoAndLeadGroupConfigs($pk: ID!) {
     }
   }
 }
+
+query getProyectoAndLeadGroupConfigsCampos($pk: ID!) {
+  proyecto: proyectoUsuario(pk: $pk) {
+    id
+    titulo
+    codigo
+    grupos: configuraciongrupoleadSet {
+      id
+      label
+    }
+  }
+}
+
+query getCamposByGroupId($groupId: ID!) {
+  camposPadre(grupoId: $groupId) {
+    ...CamposLeadFragment
+  }
+
+  campos(grupoId: $groupId) {
+    ...CamposLeadFragment
+    subCampos {
+      ...SubCamposLeadFragment
+    }
+  }
+}

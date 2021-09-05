@@ -6,3 +6,18 @@ fragment EstadosLeadProyectoFragment on EstadoLeadType {
   colorFondo
   orden
 }
+
+fragment CamposLeadFragment on CamposLeadType {
+  id
+  nombre
+  descripcion
+  tipo
+  titulo
+  padreId
+}
+fragment SubCamposLeadFragment on CamposLeadType {
+  ...CamposLeadFragment
+  subCampos {
+    ...CamposLeadFragment
+  }
+}

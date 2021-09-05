@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from '@apollo/client';
 import BaseButton from '@components/Buttons/BaseButton';
-import HrefButton from '@components/Buttons/HrefButton';
 import Form from '@components/Form';
 import { getProyectoAndEstadosById } from '@graphql/Proyectos/queries.gql';
 import useAxios from '@hooks/useAxios';
@@ -13,15 +12,14 @@ import { Accordion, AccordionTab } from 'primereact/accordion';
 import { PrimeIcons } from 'primereact/api';
 import { Dialog } from 'primereact/dialog';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { Toolbar } from 'primereact/toolbar';
 import React, { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useWatch } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import {
   createEstadoProyectoUrl,
-  deleteEstadoProyectoUrl,
   updateEstadoProyectoUrl,
 } from 'src/services/urls';
+import FooterButtons from './components/FooterButtons';
 
 const ConfigEstadoContainer = ({ id }) => {
   const [estados, setEstados] = useState([]);
@@ -48,12 +46,16 @@ const ConfigEstadoContainer = ({ id }) => {
 
   const { privateApi } = useAxios();
 
-  const mutation = useMutation((formData) =>
+  const addMutation = useMutation((formData) =>
     privateApi.post(createEstadoProyectoUrl, formData),
   );
 
   const updateMutation = useMutation((formData: any) =>
     privateApi.put(updateEstadoProyectoUrl(formData?.id), formData),
+  );
+
+  const deleteMutation = useMutation((id: any) =>
+    privateApi.delete(updateEstadoProyectoUrl(id)),
   );
 
   const { addWarningToast } = useToasts();
@@ -105,13 +107,13 @@ const ConfigEstadoContainer = ({ id }) => {
           label="Cancelar"
           icon={PrimeIcons.TIMES}
           onClick={onHideModal}
-          loading={mutation.isLoading}
+          loading={addMutation.isLoading}
         />
         <BaseButton
           label="Guardar"
           icon={PrimeIcons.SAVE}
           onClick={methods.handleSubmit(onSubmitEstado)}
-          loading={mutation.isLoading}
+          loading={addMutation.isLoading}
         />
       </React.Fragment>
     );
@@ -132,7 +134,7 @@ const ConfigEstadoContainer = ({ id }) => {
     if (isUpdate) {
       await updateMutation.mutateAsync(formData);
     } else {
-      await mutation.mutateAsync(formData);
+      await addMutation.mutateAsync(formData);
     }
 
     await refetch();
@@ -154,9 +156,8 @@ const ConfigEstadoContainer = ({ id }) => {
   );
 
   const onDeleteEstado = (estado: any) => async () => {
-    await privateApi.delete(deleteEstadoProyectoUrl(estado?.id));
+    await deleteMutation.mutateAsync(estado?.id);
     await refetch();
-
     addWarningToast(`Se ha borrado el estado: ${estado.titulo}`);
   };
 
@@ -290,7 +291,7 @@ const ConfigEstadoContainer = ({ id }) => {
           onHide={onHideModal}
           maximizable
           draggable={false}
-          closable={!mutation.isLoading}
+          closable={!addMutation.isLoading}
         >
           {/* Estado Padre */}
           <Form.FieldWrapper name="estadoPadre" label="Estado padre (Opcional)">
@@ -377,22 +378,24 @@ const ConfigEstadoContainer = ({ id }) => {
         </Dialog>
       </FormProvider>
 
-      <div className="col-12 card pt-4 pb-3 px-4 md:mt-4">
-        <div className="grid justify-content-around">
-          <HrefButton
-            className="col-12 md:col-3 my-1"
-            href={Router.update(id)}
-            variant="danger"
-            label="Regresar"
-          />
-          <HrefButton
-            className="col-12 md:col-3 my-1"
-            label="Configurar grupos de leads"
-            href={Router.configLeadGroups(id)}
-            onClick={resetLayoutState}
-          />
-        </div>
-      </div>
+      <FooterButtons
+        backHref={Router.update(id)}
+        backLabel="Regresar"
+        backIsLoading={
+          loading ||
+          addMutation.isLoading ||
+          updateMutation.isLoading ||
+          deleteMutation.isLoading
+        }
+        nextHref={Router.configLeadGroups(id)}
+        nextIsLoading={
+          loading ||
+          addMutation.isLoading ||
+          updateMutation.isLoading ||
+          deleteMutation.isLoading
+        }
+        nextLabel="Configuración de grupos de campos"
+      />
     </React.Fragment>
   );
 };
