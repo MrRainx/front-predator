@@ -52,6 +52,14 @@ query getProyectoAndLeadGroupConfigs($pk: ID!) {
   }
 }
 
+query getInfoProyectoUsuario($pk: ID!) {
+  proyecto: proyectoUsuario(pk: $pk) {
+    id
+    titulo
+    codigo
+  }
+}
+
 query getProyectoAndLeadGroupConfigsCampos($pk: ID!) {
   proyecto: proyectoUsuario(pk: $pk) {
     id
@@ -73,6 +81,19 @@ query getCamposByGroupId($groupId: ID!) {
     ...CamposLeadFragment
     subCampos {
       ...SubCamposLeadFragment
+    }
+  }
+}
+
+query getInvitacionesProyecto($proyectoId: ID!) {
+  invitaciones(proyectoId: $proyectoId) {
+    id
+    estadoStr
+    usuario {
+      id
+      username
+      firstName
+      lastName
     }
   }
 }

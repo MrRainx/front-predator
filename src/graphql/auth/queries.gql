@@ -21,3 +21,13 @@ query me {
     }
   }
 }
+
+query searchUsuarios($search: String!, $proyectoId: ID!) {
+  search(search: $search, proyectoId: $proyectoId) {
+    id
+    username
+    firstName
+    lastName
+    email
+  }
+}

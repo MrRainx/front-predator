@@ -16,7 +16,7 @@ export interface FooterButtonProps extends PropsWithChildren<any> {
 
 const FooterButtons: React.FC<FooterButtonProps> = (props) => {
   return (
-    <div className="col-12 card pt-4 pb-3 px-4 md:mt-4">
+    <div className="col-12 border pt-4 pb-3 px-4">
       <div className="grid justify-content-around">
         <HrefButton
           outlined

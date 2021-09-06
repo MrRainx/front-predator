@@ -1,5 +1,5 @@
 import global from '@constants/global';
-import { EstadoInvitacion } from '@graphql/auth/enums';
+import { EstadoInvitacion } from '@graphql/Proyectos/enums';
 import { removeItem } from '@utils/storage';
 import {
   createHook,

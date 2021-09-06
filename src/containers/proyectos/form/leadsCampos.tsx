@@ -391,9 +391,9 @@ const ConfigCamposLead: React.FC<{ id: string }> = ({ id }) => {
         backHref={Router.configLeadGroups(id)}
         backLabel="Regresar"
         backIsLoading={isLoading}
-        nextHref={Router.configLeadCampos(id)}
+        nextHref={Router.invitarPersonas(id)}
         nextIsLoading={isLoading}
-        nextLabel="Invitar personas al proyecto"
+        nextLabel="Invitar usuarios"
         nextIsDisabled={grupos.length === 0}
       />
     </React.Fragment>

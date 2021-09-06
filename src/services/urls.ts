@@ -6,6 +6,7 @@ export const APPS = {
   ESTADOS_LEADS: 'estados-leads/',
   CONFIG_GRUPOS_LEADS: 'config-grupos-leads/',
   CONFIG_CAMPOS_LEADS: 'config-campos-leads/',
+  INVITACIONES: 'invitaciones/',
 };
 
 export const getTokenUrl = `${APPS.USUARIOS}token/`;
@@ -46,3 +47,8 @@ export const deleteConfigCamposLeadUrl = (id: string | number) => {
 export const updateConfigCamposLeadUrl = (id: string | number) => {
   return `${APPS.CONFIG_CAMPOS_LEADS}${id}/`;
 };
+
+/**
+ * INVITACIONES A PROYECTO
+ */
+export const sendInvitacionProyectoUrl = `${APPS.CONFIG_CAMPOS_LEADS}`;
