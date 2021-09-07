@@ -12,9 +12,6 @@ module.exports = {
     // PRIVATE_KEY: keys.private,
     // PUBLIC_KEY: keys.public,
   },
-  cssLoaderOptions: {
-    url: false,
-  },
   typescript: {
     ignoreBuildErrors: true,
   },
