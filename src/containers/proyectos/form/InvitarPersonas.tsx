@@ -12,6 +12,8 @@ import { PrimeIcons } from 'primereact/api';
 import { TabPanel, TabView } from 'primereact/tabview';
 import React, { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
+import { IInvitacion, InvitacionesWS } from 'src/services/Invitaciones';
 import DetailUser from './components/DetailUser';
 import FooterButtons from './components/FooterButtons';
 
@@ -20,21 +22,30 @@ const InvitarPersonasContainer: React.FC<any> = ({ id }) => {
 
   const methods = useForm({ mode: 'onChange' });
 
-  const { loading: loadingIntegrantes, data: dataIntegrantes } = useQuery(
-    getInvitacionesProyecto,
-    {
-      variables: {
-        proyectoId: id,
-      },
-    },
-  );
+  const service = useMemo(() => new InvitacionesWS(), []);
 
-  const [fetchUsuarios, { loading: loadingUsuarios, data: dataUsuarios }] =
-    useLazyQuery(searchUsuarios, {
-      notifyOnNetworkStatusChange: true,
-    });
+  const {
+    loading: loadingIntegrantes,
+    data: dataIntegrantes,
+    refetch: refetchIntegrantes,
+  } = useQuery(getInvitacionesProyecto, {
+    variables: {
+      proyectoId: id,
+    },
+  });
+
+  const [
+    fetchUsuarios,
+    { loading: loadingUsuarios, data: dataUsuarios, refetch: refetchUsuarios },
+  ] = useLazyQuery(searchUsuarios, {
+    notifyOnNetworkStatusChange: true,
+  });
 
   const isLoading = loadingUsuarios || loadingIntegrantes;
+
+  const addMutation = useMutation((formData: IInvitacion) =>
+    service.create(formData),
+  );
 
   const integrantes = useMemo(
     () =>
@@ -59,6 +70,15 @@ const InvitarPersonasContainer: React.FC<any> = ({ id }) => {
         proyectoId: id,
       },
     });
+  };
+
+  const onSenInvitacion = (usuario) => async () => {
+    await addMutation.mutateAsync({
+      proyecto: id,
+      usuario: usuario.id,
+    });
+    refetchIntegrantes();
+    refetchUsuarios();
   };
 
   return (
@@ -135,6 +155,8 @@ const InvitarPersonasContainer: React.FC<any> = ({ id }) => {
                     label="Invitar"
                     sm
                     outlined
+                    onClick={onSenInvitacion(usuario)}
+                    loading={addMutation.isLoading}
                   />
                 </div>
               ))}

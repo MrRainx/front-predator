@@ -12,19 +12,23 @@ const ProyectoPage: NextPage<{ codigo?: string }> = ({ codigo }) => {
     },
   });
 
+  console.log(data);
+
   const proyecto = data?.proyecto;
 
   return (
     <PrivateLayout
       head={{
         proyecto: proyecto?.titulo,
+        title: 'Dashboard',
+      }}
+      breadCrumb={{
+        title: proyecto?.titulo,
+        items: [proyecto?.titulo || ''],
       }}
     >
       <main className="container-fluid">
         <div className="surface-0 text-center mt-6">
-          <div className="mb-3 font-bold text-2xl">
-            <span className="text-900 display-6">{proyecto?.titulo}</span>
-          </div>
           <div className="text-700 text-sm mb-6">{proyecto?.descripcion}</div>
           <div className="grid">
             <Link href="/" passHref>

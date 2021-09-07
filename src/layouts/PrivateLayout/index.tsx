@@ -5,7 +5,7 @@ import HeadBreadCrumb, {
 import HtmlHead from '@components/HtmlHead';
 import Loading from '@components/Loading';
 import { me } from '@graphql/auth/queries.gql';
-import { useLayout } from '@layouts/layout.store';
+import { useLayout, useLayoutActions } from '@layouts/layout.store';
 import { BaseLayoutProps } from '@layouts/typedefs';
 import { useRouter } from 'next/dist/client/router';
 import { ScrollTop } from 'primereact/scrolltop';
@@ -42,10 +42,16 @@ const PrivateLayout: React.FC<PrivateLayoutProps> = (props = initialState) => {
       setUsuario(myInfo);
     },
   });
+
+  const { resetLayoutState } = useLayoutActions();
   useEffect(() => {
     try {
       global.isTokenExp();
     } catch (error) {}
+
+    return () => {
+      resetLayoutState();
+    };
   }, []);
 
   return (

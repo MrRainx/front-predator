@@ -5,6 +5,7 @@ query getProyectoByUsuarioAndCodigo($codigo: String!) {
     id
     titulo
     descripcion
+    iamAdmin
   }
 }
 
@@ -15,7 +16,6 @@ query getProyectoById($pk: ID!) {
     codigo
     categoria {
       id
-      nombre
     }
   }
 }
@@ -94,6 +94,38 @@ query getInvitacionesProyecto($proyectoId: ID!) {
       username
       firstName
       lastName
+    }
+  }
+}
+
+query getMisInvitaciones {
+  misInvitaciones {
+    id
+    estadoStr
+    createdAt
+    usuario {
+      id
+    }
+    proyecto {
+      id
+      titulo
+      administrador {
+        username
+        firstName
+        lastName
+      }
+    }
+  }
+}
+
+query getMisProyectos {
+  proyectos: misProyectos {
+    id
+    titulo
+    codigo
+    categoria {
+      id
+      nombre
     }
   }
 }

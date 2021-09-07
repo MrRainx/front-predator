@@ -1,18 +1,23 @@
+import { useQuery } from '@apollo/client';
+import { getMisInvitaciones } from '@graphql/Proyectos/queries.gql';
 import ProyectoRouter from '@routes/proyectos.routes';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import { PrimeIcons } from 'primereact/api';
 import { Menubar } from 'primereact/menubar';
 import { OverlayPanel } from 'primereact/overlaypanel';
-import { ProgressSpinner } from 'primereact/progressspinner';
 import React, { useMemo, useRef } from 'react';
 import { ListGroup } from 'react-bootstrap';
 import { useUsuario } from 'src/state/usuario.store';
+import Notifications from './Notifications';
 
 const Component = (props, ref) => {
   const { id, username, email } = useUsuario();
   const op = useRef(null);
   const router = useRouter();
+
+  const { data } = useQuery(getMisInvitaciones, {});
+  const misInvitaciones = data?.misInvitaciones;
 
   const command = (path) => () => {
     router.push(path);
@@ -29,14 +34,7 @@ const Component = (props, ref) => {
 
     return (
       <React.Fragment>
-        {!id && (
-          <ProgressSpinner
-            style={{ height: '35px' }}
-            strokeWidth="3"
-            fill="#EEEEEE"
-            animationDuration=".5s"
-          />
-        )}
+        <Notifications notificaciones={misInvitaciones} />
 
         {id && (
           <button
@@ -49,14 +47,6 @@ const Component = (props, ref) => {
             onClick={(e) => op?.current?.toggle?.(e)}
           >
             <span className="me-2">{username}</span>
-            {/* {usuario?.persona?.foto && (
-    <img
-      className="img-fluid cpointer"
-      src={usuario?.persona?.foto}
-      style={{ maxHeight: '35px', border: '1px solid white' }}
-    />
-  )} */}
-
             <i className="pi pi-user cpointer text-white" />
           </button>
         )}
@@ -82,12 +72,7 @@ const Component = (props, ref) => {
                 <i className={PrimeIcons.USER} /> Mi Perfil
               </button>
             </Link>
-            {/* <button onClick={commandPush('/perfil/changePassword')}>
-              <i className={PrimeIcons.LOCK} /> Cambiar contraseña
-            </button>
-            <button onClick={commandPush('/perfil/actividad')}>
-              <i className="pi pi-user" /> Mi Actividad
-            </button>*/}
+
             <button onClick={handleLogout}>
               <i className={PrimeIcons.POWER_OFF} /> Salir
             </button>
@@ -95,7 +80,7 @@ const Component = (props, ref) => {
         </OverlayPanel>
       </React.Fragment>
     );
-  }, [id, document]);
+  }, [misInvitaciones, id, username, email, handleLogout]);
 
   return (
     <header ref={ref}>
@@ -112,6 +97,7 @@ const Component = (props, ref) => {
               {
                 label: 'Mis proyectos',
                 icon: PrimeIcons.LIST,
+                command: command(ProyectoRouter.listado),
               },
               {
                 label: 'Crear nuevo proyecto',

@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { Button, ButtonProps } from 'primereact/button';
-import React from 'react';
-export interface BaseButtonProps extends ButtonProps {
+import React, { PropsWithChildren } from 'react';
+export interface BaseButtonProps extends PropsWithChildren<ButtonProps> {
   variant?: 'primary' | 'secondary' | 'danger' | 'warning' | 'info' | 'help';
   outlined?: boolean;
   block?: boolean;
@@ -38,7 +38,9 @@ const BaseButton: React.FC<BaseButtonProps> = (props) => {
           'w-100': block,
         })}
         {...rest}
-      />
+      >
+        {props.children}
+      </Button>
     </React.Fragment>
   );
 };

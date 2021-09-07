@@ -6,7 +6,6 @@ import { getProyectoById } from '@graphql/Proyectos/queries.gql';
 import useAxios from '@hooks/useAxios';
 import useCustomForm from '@hooks/useCustomForm';
 import { useLayoutActions } from '@layouts/layout.store';
-import ProyectoRouter from '@routes/proyectos.routes';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { FormProvider } from 'react-hook-form';
@@ -14,6 +13,7 @@ import { useMutation } from 'react-query';
 import HttpResponses from 'src/enums/HttpResponses';
 import { updateProyectoUrl } from 'src/services/urls';
 import FormProyectoContainer from './form';
+import Router from '@routes/proyectos.routes';
 
 const UpdateProyectoContainer = ({ id }) => {
   const methods = useCustomForm({
@@ -27,7 +27,10 @@ const UpdateProyectoContainer = ({ id }) => {
       pk: id,
     },
     onCompleted: ({ proyecto }) => {
-      methods.reset(proyecto);
+      methods.reset({
+        ...proyecto,
+        categoria: +proyecto?.categoria?.id,
+      });
     },
   });
 
@@ -57,7 +60,7 @@ const UpdateProyectoContainer = ({ id }) => {
       const { data, status } = await mutation.mutateAsync(formData);
       if (status === HttpResponses.HTTP_200_OK) {
         console.log(data);
-        const route = ProyectoRouter.configEstados(data?.id);
+        const route = Router.configEstados(data?.id);
         router.push(route);
         return resetLayoutState();
       }

@@ -21,7 +21,11 @@ const HrefButton: React.FC<HrefButtonProps> = (props) => {
     }
   };
 
-  return <BaseButton {...rest} onClick={onClick} />;
+  return (
+    <BaseButton {...rest} onClick={onClick}>
+      {props.children}
+    </BaseButton>
+  );
 };
 
 HrefButton.defaultProps = initialState;

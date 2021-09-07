@@ -10,9 +10,7 @@ const defaultProps: IndexColumnProps = {
   className: 'text-center font-weight-bold index-column',
 };
 
-export const IndexColumn: React.FC<IndexColumnProps> = (
-  props = defaultProps,
-) => {
+export const IndexColumn: React.FC<IndexColumnProps> = (props = null) => {
   return (
     <Column
       header="#"

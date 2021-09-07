@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const URL_BASE = 'http://127.0.0.1:8000/';
 
 export const APPS = {
@@ -52,3 +54,24 @@ export const updateConfigCamposLeadUrl = (id: string | number) => {
  * INVITACIONES A PROYECTO
  */
 export const sendInvitacionProyectoUrl = `${APPS.CONFIG_CAMPOS_LEADS}`;
+
+const instance = axios.create({
+  baseURL: '',
+});
+
+export const Invitaciones = {
+  getBaseUri: () => {
+    console.log(this);
+    return 'HOLA MUNDO';
+  },
+  create(model) {
+    console.log('TEST: ', this.getBaseUri());
+    return;
+  },
+  updateById(id, model) {
+    return instance.put(id, model);
+  },
+  deleteById(id) {
+    return instance.delete(id);
+  },
+};
