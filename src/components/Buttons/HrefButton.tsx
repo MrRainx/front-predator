@@ -19,6 +19,13 @@ const HrefButton: React.FC<HrefButtonProps> = (props) => {
     if (href) {
       router.push(href);
     }
+
+    if (props.clipBoardText) {
+      navigator.clipboard.writeText(props.clipBoardText);
+    }
+    if (props.clipBoardItems) {
+      navigator.clipboard.write(props.clipBoardItems);
+    }
   };
 
   return (

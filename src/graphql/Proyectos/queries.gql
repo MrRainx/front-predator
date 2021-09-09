@@ -139,3 +139,14 @@ query getCredencialesByProyecto($proyectoId: ID!) {
     isActive
   }
 }
+
+query getCredencialExterna($pk: ID!) {
+  credencial: credencialExterna(pk: $pk) {
+    id
+    nombre
+    codigo
+    descripcion
+    isActive
+    jwtToken
+  }
+}

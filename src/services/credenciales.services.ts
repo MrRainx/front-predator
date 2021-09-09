@@ -7,6 +7,7 @@ export interface ICredencialExterna {
   descripcion?: string;
   isActive?: boolean;
   proyecto?: Pk | any;
+  jwtToken?: string;
 }
 
 export class CredencialExternaWS

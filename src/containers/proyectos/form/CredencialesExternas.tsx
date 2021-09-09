@@ -232,7 +232,7 @@ const CredencialesExternasContainer: React.FC<{ id: Pk }> = ({ id }) => {
                 tooltip="Información"
                 sm
                 outlined
-                href={Router.credencial(rowData.id)}
+                href={Router.credencialExterna(id, rowData.id)}
               />
             </div>
           )}

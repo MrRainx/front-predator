@@ -12,8 +12,8 @@ const router = {
   credencialesExternas(id: Pk) {
     return `${this.listado}form/credenciales-externas?id=${id}`;
   },
-  credencial(id: Pk) {
-    return `${this.listado}form/credencial-externa?id=${id}`;
+  credencialExterna(idProyecto: Pk, idCredencial: Pk) {
+    return `${this.listado}form/credencial-externa?id=${idProyecto}&credencial=${idCredencial}`;
   },
   misInvitaciones: `/proyectos/invitaciones/`,
   invitacionProyecto(id: Pk) {

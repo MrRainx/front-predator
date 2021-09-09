@@ -5,8 +5,9 @@ import PrivateLayout from '@layouts/PrivateLayout';
 import Router from '@routes/proyectos.routes';
 import { NextPage } from 'next';
 import React from 'react';
+import { Pk } from 'src/services/Base.service';
 
-const CredencialesExternasPage: NextPage<any> = ({ id }) => {
+const CredencialesExternasPage: NextPage<{ id: Pk }> = ({ id }) => {
   const { loading, data } = useQuery(getInfoProyectoUsuario, {
     variables: {
       pk: id,
@@ -36,6 +37,6 @@ const CredencialesExternasPage: NextPage<any> = ({ id }) => {
   );
 };
 
-CredencialesExternasPage.getInitialProps = ({ query }) => query;
+CredencialesExternasPage.getInitialProps = ({ query }: any) => query;
 
 export default CredencialesExternasPage;
