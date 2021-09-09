@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const URL_BASE = 'https://predator-dev.herokuapp.com/';
-// export const URL_BASE = 'http://127.0.0.1:8000/';
+// export const URL_BASE = 'https://predator-dev.herokuapp.com/';
+export const URL_BASE = 'http://127.0.0.1:8000/';
 
 export const APPS = {
   USUARIOS: 'usuarios/',

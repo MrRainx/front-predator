@@ -5,12 +5,12 @@ import React, { PropsWithChildren } from 'react';
 export interface FooterButtonProps extends PropsWithChildren<any> {
   backHref: string;
   backLabel?: string;
-  backIsLoading: boolean;
+  backIsLoading?: boolean;
   backIsDisabled?: boolean;
 
-  nextHref: string;
+  nextHref?: string;
   nextLabel: string;
-  nextIsLoading: boolean;
+  nextIsLoading?: boolean;
   nextIsDisabled?: boolean;
 }
 

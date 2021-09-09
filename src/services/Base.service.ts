@@ -56,6 +56,7 @@ export const publicApi = () => {
 export abstract class AbstractWs implements IWs {
   uri?: string;
   api = null;
+
   constructor() {
     this.api = privateApi();
     createAuthRefreshInterceptor(this.api, refreshAuthLogic);
@@ -71,3 +72,5 @@ export abstract class AbstractWs implements IWs {
     return this.api;
   }
 }
+
+

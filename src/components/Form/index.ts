@@ -13,6 +13,16 @@ import Select from './Select';
 import TextArea from './TextArea';
 import TextInput from './TextInput';
 
+import dynamic from 'next/dynamic';
+import { SwitchButtonProps } from './SwitchButton';
+
+const SwitchButton = dynamic<SwitchButtonProps>(
+  () => import('./SwitchButton'),
+  {
+    ssr: false,
+  },
+);
+
 const Form = {
   TextInput: TextInput,
   NumberInput: NumberInput,
@@ -28,6 +38,7 @@ const Form = {
   Controller: Controller,
   ErrorMessage: CustomErrorMessage,
   NonFieldErrors: NonFieldErrors,
+  SwitchButton: SwitchButton,
 };
 
 export default Form;

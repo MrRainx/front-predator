@@ -129,3 +129,13 @@ query getMisProyectos {
     }
   }
 }
+
+query getCredencialesByProyecto($proyectoId: ID!) {
+  credenciales: credencialesEsternasProyecto(proyectoId: $proyectoId) {
+    id
+    nombre
+    codigo
+    descripcion
+    isActive
+  }
+}

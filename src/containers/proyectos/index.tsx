@@ -4,15 +4,20 @@ import BaseDataTable from '@components/Table/BaseDataTable';
 import { IndexColumn } from '@components/Table/IndexColumn';
 import { getMisProyectos } from '@graphql/Proyectos/queries.gql';
 import Router from '@routes/proyectos.routes';
+import Link from 'next/link';
 import { PrimeIcons } from 'primereact/api';
 import { Column } from 'primereact/column';
-import React from 'react';
+import { OverlayPanel } from 'primereact/overlaypanel';
+import React, { CSSProperties, useRef, useState } from 'react';
+import { ListGroup } from 'react-bootstrap';
 
 const ProyectosContainer = () => {
   const { loading, data, refetch } = useQuery(getMisProyectos, {
     notifyOnNetworkStatusChange: true,
   });
 
+  const op = useRef(null);
+  const [selectedItem, setSelectedItem] = useState(null);
   const header = () => {
     return (
       <div>
@@ -62,7 +67,6 @@ const ProyectosContainer = () => {
         <Column
           header="Opciones"
           body={(rowData) => {
-            console.log(rowData);
             return (
               <React.Fragment>
                 <div className="d-flex flex-row justify-content-around">
@@ -70,9 +74,14 @@ const ProyectosContainer = () => {
                     icon={PrimeIcons.COG}
                     sm
                     outlined
-                    href={Router.update(rowData.id)}
-                    tooltip="Editar"
+                    // href={Router.update(rowData.id)}
+                    tooltip="Opciones"
+                    onClick={(evt) => {
+                      setSelectedItem(rowData);
+                      op.current.toggle(evt);
+                    }}
                   />
+
                   <HrefButton
                     icon={PrimeIcons.INFO}
                     sm
@@ -94,6 +103,65 @@ const ProyectosContainer = () => {
           }}
         />
       </BaseDataTable>
+      <OverlayPanel ref={op} style={{ minWidth: '350px' } as CSSProperties}>
+        <h5 className="text-center">
+          <i className={PrimeIcons.LIST} /> Opciones
+        </h5>
+
+        <ListGroup className="nav__user__menu">
+          <Link href={Router.update(selectedItem?.id)}>
+            <button>
+              <i className={PrimeIcons.PENCIL} />
+              Editar información general
+            </button>
+          </Link>
+        </ListGroup>
+
+        <ListGroup className="nav__user__menu">
+          <Link href={Router.configEstados(selectedItem?.id)}>
+            <button>
+              <i className={PrimeIcons.COG} />
+              Configuración de estados
+            </button>
+          </Link>
+        </ListGroup>
+
+        <ListGroup className="nav__user__menu">
+          <Link href={Router.configLeadGroups(selectedItem?.id)}>
+            <button>
+              <i className={PrimeIcons.COG} />
+              Configuración de grupos de información
+            </button>
+          </Link>
+        </ListGroup>
+
+        <ListGroup className="nav__user__menu">
+          <Link href={Router.configLeadCampos(selectedItem?.id)}>
+            <button>
+              <i className={PrimeIcons.COG} />
+              Configuración de campos por grupo
+            </button>
+          </Link>
+        </ListGroup>
+
+        <ListGroup className="nav__user__menu">
+          <Link href={Router.invitarPersonas(selectedItem?.id)}>
+            <button>
+              <i className={PrimeIcons.SEND} />
+              Invitar personas
+            </button>
+          </Link>
+        </ListGroup>
+
+        <ListGroup className="nav__user__menu">
+          <Link href={Router.credencialesExternas(selectedItem?.id)}>
+            <button>
+              <i className={PrimeIcons.LIST} />
+              Credenciales externas
+            </button>
+          </Link>
+        </ListGroup>
+      </OverlayPanel>
     </main>
   );
 };

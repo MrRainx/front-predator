@@ -188,9 +188,9 @@ const InvitarPersonasContainer: React.FC<any> = ({ id }) => {
         backHref={Router.configLeadCampos(id)}
         backLabel="Config. campos"
         backIsLoading={isLoading}
-        nextHref={Router.invitarPersonas(id)}
+        nextHref={Router.credencialesExternas(id)}
         nextIsLoading={isLoading}
-        nextLabel="Detalle del proyecto"
+        nextLabel="Credenciales externas"
       />
     </main>
   );

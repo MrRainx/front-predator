@@ -15,6 +15,7 @@ export class InvitacionesWS
 {
   uri = 'invitaciones/';
 
+
   create(model: IInvitacion) {
     return this.getApi().post<IInvitacion>(this.getUri(), model);
   }

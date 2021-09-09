@@ -16,7 +16,9 @@ const Component = (props, ref) => {
   const op = useRef(null);
   const router = useRouter();
 
-  const { data } = useQuery(getMisInvitaciones, {});
+  const { data } = useQuery(getMisInvitaciones, {
+    // pollInterval: 5000,
+  });
   const misInvitaciones = data?.misInvitaciones;
 
   const command = (path) => () => {
