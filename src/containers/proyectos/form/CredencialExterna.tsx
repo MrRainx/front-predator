@@ -3,28 +3,32 @@ import HrefButton from '@components/Buttons/HrefButton';
 import { getCredencialExterna } from '@graphql/Proyectos/queries.gql';
 import { PrimeIcons } from 'primereact/api';
 import React, { useState } from 'react';
+import { androidstudio, CopyBlock, monokaiSublime } from 'react-code-blocks';
 import { Pk } from 'src/services/Base.service';
 import { ICredencialExterna } from 'src/services/credenciales.services';
 
 const test = `
-fetch(
-    'http://localhost:7500/proyectos/form/credencial-externa?id=15&credencial=9',
+const response = async () => {
+  return await fetch(
+    "http://localhost:7500/proyectos/form/credencial-externa?id=15&credencial=9",
     {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Authorization: 'JWT ',
-        'Content-type': 'application-json',
+        Authorization: "JWT ",
+        "Content-type": "application-json",
       },
       body: JSON.stringify({
-        identificador: '133112312123312',
-        paso: 'informacionCliente',
+        identificador: "133112312123312",
+        paso: "informacionCliente",
         payload: {
-          primerNombre: 'Prueba',
-          primerApellido: 'Prueba dos',
+          primerNombre: "Prueba",
+          primerApellido: "Prueba dos",
         },
       }),
-    },
-  );
+    }
+  ).then((res) => res.json());
+};
+
 `;
 const CredencialExternaContainer: React.FC<{ id: Pk }> = ({ id }) => {
   const { loading, data } = useQuery<{ credencial: ICredencialExterna }>(
@@ -106,17 +110,15 @@ const CredencialExternaContainer: React.FC<{ id: Pk }> = ({ id }) => {
         <label htmlFor="" className="mt-3">
           Ejemplo:
         </label>
+
         <div className="bg-gray-300">
-          <div className="p-3 d-flex justify-content-between">
-            <code className="align-self-center font-bold">{test}</code>
-            <HrefButton
-              icon={PrimeIcons.COPY}
-              className="align-self-center"
-              text
-              outlined
-              rounded
-              clipBoardText={credencial?.jwtToken}
-              tooltip="Copiar token"
+          <div className="demo">
+            <CopyBlock
+              language="jsx"
+              text={test}
+              showLineNumbers
+              theme={androidstudio}
+              wrapLines={true}
             />
           </div>
         </div>
