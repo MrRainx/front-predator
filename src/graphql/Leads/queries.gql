@@ -1,0 +1,31 @@
+query getLeadGroups($codigo: String!) {
+  grupos: leadsTable(codigo: $codigo) {
+    id
+    identificador
+    isActive
+    createdAtStr
+    credencial {
+      id
+      nombre
+    }
+    lastSeguimiento {
+      id
+      estado {
+        color
+        colorFondo
+        titulo
+      }
+    }
+    asignadoA {
+      id
+      username
+    }
+  }
+}
+
+query getDataTableLeads($codigo: String!) {
+  integrantes(proyectoCodigo: $codigo) {
+    id
+    username
+  }
+}

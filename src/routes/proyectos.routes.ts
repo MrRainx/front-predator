@@ -19,6 +19,9 @@ const router = {
   invitacionProyecto(id: Pk) {
     return this.misInvitaciones + id;
   },
+  asignacion(codigo: string) {
+    return `${this.listado}${codigo}/asignacion`;
+  },
 };
 
 export default router;

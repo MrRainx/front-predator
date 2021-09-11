@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { getProyectoByUsuarioAndCodigo } from '@graphql/Proyectos/queries.gql';
 import PrivateLayout from '@layouts/PrivateLayout';
+import Router from '@routes/proyectos.routes';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import React from 'react';
@@ -11,8 +12,6 @@ const ProyectoPage: NextPage<{ codigo?: string }> = ({ codigo }) => {
       codigo,
     },
   });
-
-  console.log(data);
 
   const proyecto = data?.proyecto;
 
@@ -46,21 +45,20 @@ const ProyectoPage: NextPage<{ codigo?: string }> = ({ codigo }) => {
               </div>
             </Link>
 
-            <div className="col-12 md:col-4 mb-4 px-5">
-              <span
-                className="p-3 shadow-2 mb-3 inline-block"
-                style={{ borderRadius: '10px' }}
-              >
-                <i className="pi pi-lock text-4xl text-blue-500"></i>
-              </span>
-              <div className="text-900 mb-3 font-medium">
-                End-to-End Encryption
+            <Link href={Router.asignacion(codigo)}>
+              <div className="col-12 md:col-4 mb-4 px-5 cursor-pointer">
+                <span
+                  className="p-3 shadow-2 mb-3 inline-block"
+                  style={{ borderRadius: '10px' }}
+                >
+                  <i className="pi pi-lock text-4xl text-blue-500"></i>
+                </span>
+                <div className="text-900 mb-3 font-medium">Asignación</div>
+                <span className="text-700 text-sm line-height-3">
+                  Asignacion al equipo
+                </span>
               </div>
-              <span className="text-700 text-sm line-height-3">
-                Risus nec feugiat in fermentum posuere urna nec. Posuere
-                sollicitudin aliquam ultrices sagittis.
-              </span>
-            </div>
+            </Link>
 
             <div className="col-12 md:col-4 mb-4 px-5">
               <span

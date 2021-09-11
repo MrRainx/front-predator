@@ -327,15 +327,26 @@ const ConfigEstadoContainer = ({ id }) => {
             <Form.ErrorMessage />
           </Form.FieldWrapper>
 
-          <div className="md:w-2">
+          <div className="d-flex flex-row justify-content-between flex-wrap">
             <Form.FieldWrapper name="orden" label="Orden">
               <Form.ControlledWrapper
                 defaultValue={1}
                 rules={{ required: 'Este campo es obligatorio' }}
               >
-                <Form.NumberInput showButtons min={1} />
+                <Form.NumberInput
+                  showButtons
+                  min={1}
+                  decrementButtonClassName="p-button-outlined"
+                  incrementButtonClassName="p-button-outlined"
+                />
               </Form.ControlledWrapper>
               <Form.ErrorMessage />
+            </Form.FieldWrapper>
+
+            <Form.FieldWrapper name="isDefault" label="Es por defecto?">
+              <Form.ControlledWrapper>
+                <Form.SwitchButton onlabel="SI" offlabel="NO" offstyle="dark" />
+              </Form.ControlledWrapper>
             </Form.FieldWrapper>
           </div>
 

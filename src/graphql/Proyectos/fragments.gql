@@ -5,6 +5,7 @@ fragment EstadosLeadProyectoFragment on EstadoLeadType {
   color
   colorFondo
   orden
+  isDefault
 }
 
 fragment CamposLeadFragment on CamposLeadType {
